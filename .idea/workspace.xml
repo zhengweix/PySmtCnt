@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5bf23ee-5345-4a53-a907-32aca8c6d918" name="Changes" comment="" />
+    <list default="true" id="d5bf23ee-5345-4a53-a907-32aca8c6d918" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/dapp.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +31,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="b36ed5c7-74ee-4830-96d8-1a21137a02d4" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -117,7 +123,7 @@
       <workItem from="1667966261518" duration="7637000" />
       <workItem from="1667973958809" duration="1552000" />
       <workItem from="1667981899601" duration="619000" />
-      <workItem from="1667982638238" duration="500000" />
+      <workItem from="1667982638238" duration="915000" />
     </task>
     <servers />
   </component>

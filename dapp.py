@@ -22,5 +22,4 @@ def registered():
     return 'ethaddress: %s \n txhash: %s \n txdata: %s \n contractaddress: %s' % (w3.eth.accounts[0], HexBytes.hex(response['hash']), HexBytes(response['input']), asset_register.address)
 
 if __name__ == '__main__':
-    #app.run(debug=True, host='0.0.0.0', port=5000)
-    w3.isConnected()
+    app.run(debug=True, host='0.0.0.0', port=5000)
