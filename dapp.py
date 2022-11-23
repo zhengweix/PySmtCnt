@@ -1,13 +1,12 @@
 '''
 Decentralized Application for developing Smart Contract using Python, Flask, & Solidity
 '''
-from flask import Flask
+from flask import Flask, jsonify
 from hexbytes import HexBytes
 from web3.auto import w3
 from deploy import asset
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'DemoSecretKey'
 @app.route('/registered', methods=['POST'])
 def registered():
     '''
@@ -19,10 +18,11 @@ def registered():
             w3.eth.accounts[0]
         ).transact()
     )
-    return f"ethaddress: {w3.eth.accounts[0]} \n" + \
-           f"txhash: {HexBytes.hex(response['hash'])} \n"  + \
-           f"txdata: {HexBytes(response['input'])} \n" + \
-           f"contractaddress: {asset.address}"
+    jsonify(response)
+@app.route('/api/accounts')
+def getAccounts():
+    return jsonify(w3.eth.accounts)
+
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True)
