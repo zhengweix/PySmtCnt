@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d5bf23ee-5345-4a53-a907-32aca8c6d918" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/dapp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.py" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +100,7 @@
       <workItem from="1669192557492" duration="393000" />
       <workItem from="1669193811563" duration="38943000" />
       <workItem from="1669413626936" duration="3456000" />
-      <workItem from="1669671217753" duration="10000" />
+      <workItem from="1669671217753" duration="283000" />
     </task>
     <task id="LOCAL-00001" summary="Added 221111">
       <created>1668166603667</created>
