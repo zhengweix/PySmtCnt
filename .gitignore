@@ -1,2 +1,4 @@
 # created by virtualenv automatically
-*
+frontend/node_modules
+lib
+bin
