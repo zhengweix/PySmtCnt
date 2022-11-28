@@ -1,56 +1,35 @@
 '''
 Deploy Solidity Contract to Ganache-CLI
 '''
-from solcx import compile_standard
+from json import *
 from web3 import Web3, HTTPProvider
-from json import loads
-w3 = Web3(HTTPProvider('http://127.0.0.1:8545'))
-BUYER = w3.eth.accounts[3]
-DEALER = w3.eth.accounts[0]
-w3.eth.defaultAccount = DEALER
-BUYER_KEY = '0xf17d112f0d8d408be0c6afdb0592530bef72fe08953a8cc072e7de1b05b4c479'
-response = compile_standard(
-    {
-        "language": "Solidity",
-        "sources": {
-            "alpha": {
-                "urls": [
-                    "Vehicle.sol"
-                ]
-            }
-        },
-        "settings": {
-            "optimizer": {
-               "enabled": True
-            },
-            "outputSelection": {
-                "*": {
-                    "*": [
-                        "metadata", "evm.bytecode", "abi"
-                    ]
-                }
-            }
-        }
-    },
-    allow_paths=['.']
-)
-contract = w3.eth.contract(
-    abi=response['contracts']['alpha']['Vehicle']['abi'],
-    bytecode=response['contracts']['alpha']['Vehicle']['evm']['bytecode']['object']
-)
-amount = w3.toWei(5, 'ether')
-txn_receipt = w3.eth.waitForTransactionReceipt(contract.constructor('Blue', 'V1', amount).transact())
-print(loads(w3.toJSON(txn_receipt)))
-asset = w3.eth.contract(
-    address=txn_receipt.contractAddress,
-    abi=response['contracts']['alpha']['Vehicle']['abi']
-)
-print(asset.functions.getVin().call())
-print(asset.functions.getOwner().call())
+from hexbytes import HexBytes
 
-buyer_txn_receipt = w3.eth.waitForTransactionReceipt(asset.functions.buyVehicle(amount).transact({'from': BUYER, 'value': amount, 'gas': 1000000}))
-print(buyer_txn_receipt)
+def set_registration(sender: str, receiver: str, private_key: str, amount: int = 1) -> object:
+    '''
+    parses array of smart contract data
+    :param sender:
+    :param receiver:
+    :param proivat_key:
+    :param amount:
+    :return: array {status, data}
+    https://www.polarsparc.com/xhtml/GanacheSolidityPython.html
+    '''
+    w3 = Web3(HTTPProvider('http://127.0.0.1:8545'))
+    if sender == receiver:
+        return {'status': 500, 'error': 'can\' be same account'}
+    if not w3.isAddress(sender) or not w3.isChecksumAddress(receiver):
+        return {'status': 501, 'error': ''}
+    try:
+        signed_txn = w3.eth.account.signTransaction(
+            {'from': sender, 'to': receiver, 'value': w3.toWei(amount, 'ether'), 'gas': 90000, 'gasPrice': w3.eth.gas_price, 'nonce': w3.eth.getTransactionCount(sender)}, private_key)
+        signed_hash = signed_txn['hash']
+    except (ValueError, TypeError) as e:
+        return {'status': 502, 'error': str(e)}
+    try:
+        txn = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+        if HexBytes(loads(w3.toJSON(w3.eth.getTransaction(txn)))['hash']) == signed_hash:
+            return {'status': 200, 'data': w3.fromWei(w3.eth.getBalance(sender), 'ether')}
+    except (ValueError, TypeError) as e:
+        return {'status': 503, 'error': str(e)}
 
-print(asset.functions.getOwner().call())
-print(w3.fromWei(w3.eth.getBalance(DEALER), 'ether'))
-print(w3.fromWei(w3.eth.getBalance(BUYER), 'ether'))
